@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Tareas</title>
+    <style>
+        /* Estilo para alinear la tabla a la izquierda */
+        .table-container {
+            margin-top: 20px;
+        }
+
+        table {
+            width: 80%;
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h1>Lista de Tareas</h1>
+
+    <!-- Formulario para agregar una nueva tarea -->
+    <form action="/agregar_tarea" method="POST">
+        <input type="text" name="descripcion" placeholder="Nueva tarea" required>
+        <input type="submit" value="Agregar">
+    </form>
+
+    <!-- Contenedor para la tabla con margen izquierdo -->
+    <div class="table-container">
+        <!-- Lista de tareas en forma de tabla -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Descripción</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for tarea in tareas %}
+                    <tr>
+                        <td>{{ tarea.descripcion }}</td>
+                        <td>
+                            {% if tarea.estado == 0 %}
+                                Pendiente
+                            {% else %}
+                                Completada
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="/completar_tarea/{{ tarea.Id }}">Marcar como completada</a> |
+                            <a href="/eliminar_tarea/{{ tarea.Id }}">Eliminar</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
